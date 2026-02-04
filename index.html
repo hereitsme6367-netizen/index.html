@@ -8,107 +8,207 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&family=Great+Vibes&display=swap');
 body { font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; color: white; touch-action: manipulation; }
 
+/* Background */
 .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 .floating-item { position: absolute; animation: moveUp 8s linear infinite; opacity: 0.6; }
 
 @keyframes moveUp {
-  0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
 }
 
+/* Page Transitions */
 .page { display: none; height: 100vh; width: 100%; position: absolute; z-index: 10; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center; }
 .active { display: flex; }
 
 .glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 2.5rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
+/* Flashlight Reveal */
 .reveal-text { color: rgba(255, 255, 255, 0.03); transition: color 0.4s; user-select: none; }
 .reveal-text:hover, .reveal-text:active { color: rgba(255, 255, 255, 1); text-shadow: 0 0 15px #ff69b4; }
 
+/* Slider */
 .slider-container { width: 100%; background: rgba(255,255,255,0.1); border-radius: 50px; padding: 5px; position: relative; height: 60px; }
 #promiseSlider { width: 100%; cursor: pointer; opacity: 0; position: absolute; z-index: 2; height: 50px; }
 .slider-track { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, #ff69b4, #ff1493); border-radius: 50px; width: 0%; transition: width 0.1s; }
 
-.btn-blue-glow { box-shadow: 0 0 25px rgba(37, 99, 235, 0.8); }
-.btn-red-elliptical {
-  border-radius: 50% / 100%;
-  height: 55px;
-  width: 240px;
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+/* Buttons */
+.btn-blue-glow { box-shadow: 0 0 25px rgba(37, 99, 235, 0.8); transition: 0.3s; }
+.btn-red-elliptical { 
+    border-radius: 50% / 100%; 
+    height: 55px; 
+    width: 240px;
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.5); 
+    transition: all 0.12s ease-out;
 }
 
 .person-container {
-  width: 250px; height: 250px; border-radius: 50%;
-  border: 4px solid #fff; overflow: hidden;
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    width: 250px; height: 250px; border-radius: 50%;
+    border: 4px solid #fff; overflow: hidden; margin-bottom: 20px;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
 }
+
+.lyrics-font { font-family: 'Great Vibes', cursive; color: #ff69b4; }
 </style>
 </head>
-
 <body>
 
 <div class="bg-layer" id="bgLayer"></div>
 
-<!-- p5 FIXED MANAS TEXT -->
-<section id="p5" class="page">
-  <div class="glass p-8 w-full max-w-lg">
-    <p class="text-xs text-yellow-400 mb-2">Touch to reveal my feelings</p>
-
-    <div class="reveal-text">
-      <span style="color:white;">
-9th me Manas tere se bhot baat krta tha and you used to laugh alot on his joke and ustime mujhe lagne laga ki tu Manas ko like krti hai or Manas ko bhi pata tha ki I like you but still he used to do that anyways but when he told me that ki tu usko friend zone krdi my satisfaction was on the next level I was like that's my girl!
-      </span>
-
-Dekh ik log bolte hai ki is age me attraction hota hai but I don't think ki it's a attraction like I gave my 9-10 years thinking about you...
+<section id="p1" class="page active">
+    <div class="glass p-10 w-full max-w-md animate__animated animate__zoomIn">
+        <h1 class="text-white font-black text-2xl mb-8 italic">Sabhi line aache se padhe bhot mehnat se banaya hun <br><span class="text-pink-400 text-lg not-italic">it will take 10-15 min to read</span></h1>
+        <input type="password" id="pass" placeholder="Enter Password" class="w-full bg-white/5 text-white border-2 border-white/10 p-4 rounded-2xl mb-6 text-center outline-none focus:border-pink-500 transition-all">
+        <button onclick="checkPass()" class="w-full bg-gradient-to-r from-pink-500 to-red-500 text-white font-black py-4 rounded-2xl">Enter</button>
     </div>
-
-    <button onclick="nav(6)" class="mt-8 w-full bg-yellow-500 text-black py-3 rounded-xl font-bold">Continue</button>
-  </div>
 </section>
 
-<!-- p8 -->
+<section id="p2" class="page"><button onclick="nav(3)" class="glass p-12 text-white text-3xl font-black italic">"Jivan ka sabse bada rish dekhne ke liye yaha click kare"</button></section>
+<section id="p3" class="page"><div class="glass p-8 w-full max-w-lg">Sun ye tu pata nhi expect ki thi ya nhi but bhot time se bolna tha so ........
+Well lemme take you to the past when we were kids I know it will sound stupid to you but I liked you since we were in class 2 (Mt bolna ki ande se bahar aaya nhi ki ye sab karna hai) so back to the story mujhe sachi nhi pata tha ki me tere liye kya feel krta tha ustime I really liked you when you were around and the feeling got so intense when we made our group ARKS army in class 5 th like me itna RS paglu ho gya tha ki kya hi batau I used to think alot about you and yea you were my first crush (idk if tere ko pata tha ya nhi) fir aaya lockdown and we switched to online mere pasine chut gye the tera number dhundne ke liye like I almost texted 10+ people with different excuses to find the real number and after so much of hardwork I got your number and then kuch dino baad akriti ne propose Kia that she liked me but I rejected cuz me RS paglu tha ustime or tujhe bataya kyu ki I thought you will understand why I rejected her but you didn't got any hints!mere ko aj bhi vo din yaad hai 4th class ka ki tu mere ko class me boli thi tere ko kal ek apna secret bataungi or me tere se pucha to abhi bata to tu boli nhi kal ,me pura din wait Kia or day dreaming krrta ki tu propose karegi lekin agle din kuch ulta hua tu bs kisi ka gossip krri thi! Anyways..........
+ <button onclick="nav(4)" class="mt-8 w-full bg-white text-black py-3 rounded-xl font-bold">Next</button></div></section>
+<section id="p4" class="page"><div class="glass p-8 w-full max-w-lg">Then we reached 8 and I got proposal from different girls including some of our schoolmates lekin me thera loyal Banda (Sigma ka bhoot Chadha tha ) so sabko reject kr dia but after 8th the real thing arrived when we shifted to different classes and those 2 (9th and 10th) were my most hurting years like I used to watch you when you crossed me without even looking at me yr Sigma to tha but tere liye thodi na bhot hurt hota tha anyways fir 9th me Jincy mere se chipakne lagi and I thought chalo aacha hai ladki hi to hai(puberty effect) and at last she ended up proposing me I said no she tried every possible ways like gifts ka lalach physical hone ka lalach and the pics(ha vahi vale jo tu soch ri) sab try krli vo but end me Mera answer no hi tha mere friends bolte tu kitna gadha hai be itna offer krri to leleta or nhi bhi chaiye tha to uski vo vali pics leke hamko dedeta hamlog khush hojate ab unko kya bolu me uske liye loyal tha jo kabhi mere ko samne se text bhi nhi ki ab tu sochegi ye me tere ko kyu batara well jincy reject hone ke baad rumours faila di ki I liked her even though I had chat ss but I didn't show it to anyone to just save her image kyu ki vo kind of popular bhi thi me socha ki tere ko bata dun but I thought ki vo sahi time nhi tha ..... <button onclick="nav(5)" class="mt-8 w-full bg-white text-black py-3 rounded-xl font-bold">Next</button></div></section>
+
+<section id="p5" class="page">
+    <div class="glass p-8 w-full max-w-lg">
+        <p class="text-xs text-yellow-400 mb-2">Touch to reveal my feelings</p>
+        <div class="reveal-text text-white">9th me Manas tere se bhot baat krta tha and you used to laugh alot on his joke and ustime mujhe lagne laga ki tu Manas ko like krti hai or Manas ko bhi pata tha ki I like you but still he used to do that anyways but when he told me that ki tu usko friend zone krdi my satisfaction was on the next level I was like that's my girl! But Kushi jada deer tikti kaha hai me socha jab to Manas ko friendzone krdi to mera kya hoga 😭me to baat bhi nhi krta but I think that's the right time ya to ignore krde ya ha krde kyu ki me jindgi bhar tera friend nhi rehna chahta 
+        Dekh ik log bolte hai ki is age me attraction hota hai but I don't think ki it's a attraction like I gave my 9-10 years thinking about you and literally mere eyes se aasu nikalre ye likhte hue(mummy Kasam mujhe bhot rone ka Mann krra hai) roundu Mt bolna tu mujhe itna ignore ki hai ki bhot baar laga ki faltu ka attitude hai issme choro isko isse bhi aache ladkia hai Sundar Sundar jinhone propose Kia hai but I was wrong I don't know yr attraction ke end me hamesha tu hoti hai even though we are just friend but Mera attraction kisi bhi ladki ke liye khatam hojata hai and i am genuinely saying this (aisa nahin hain impress krne ke liye kuch bhi bolunga me bs real cheez batara )
+        </div>
+        <button onclick="nav(6)" class="mt-8 w-full bg-yellow-500 text-black py-3 rounded-xl font-bold">Continue</button>
+    </div>
+</section>
+
+<section id="p6" class="page"><div class="glass p-8 w-full max-w-lg">Dekh I don't know if you feel for me or not but I literally held you in my mind for 9-10 years or agge bhi rahegi cuz first love is always special bhot log bolte hai ki first love kabhi nhi milta kisi ko but again me trying me tere ko pucha ki mere birthday pe chalegi khane socha sayad isse ham or close aaye but tu 3-4 baar ignore ki hai and it's really bad (ha bura laga thoda sa kadar kr lia kr)
+I am not sending you on valentines cuz I don't like to celebrate it like most of the people do cuz you are genuinely special for me meri abhi bhi teri ek pic hai jo tune 2020 me di thi ekdam sahi salamat Rakha hai mene uski sketch bhi banai thi meri pheli person sketch vo bhi teri(chal fek nhi ra raat me ladke jhut nhi bolte me 3 baje likhra hun ye)
+ <button onclick="nav(7)" class="mt-8 w-full bg-white text-black py-3 rounded-xl font-bold">Almost there</button></div></section>
+
+<section id="p7" class="page">
+    <div class="glass p-8 w-full max-w-lg border-pink-500/40">
+        <div class="mb-8 text-left leading-relaxed">I know ki me bhi friendzone ho jaunga but me isliye batara kyu ki I can't wait 7-8 saal se apne andar dabake rakha hun all the memories we spend together mujhe padhai me bhot distractions hori hain ki tujhe koi or lejaega to kya karunga me abhi tak ka sabse bada risk lera hun aag ke sath khelra me socha tha ki exam jisdin clear hua (jee) ka usdin tere ko puchunga but uske liye padhna padta hai but dimag me tu rehti hai to kya karu khud bata anyways me tere ko kabhi gf ke jaise imagine nhi krta always as a wife yea sound cringe but me real self batara I always day dream about our wedding and I am putting the ring in your hand yr bhot cringe hora me isliye batara kyu ki I want you to know how much loyal I was even though we are just friends waise crush ke liye itna koi loyal nhi hota(green forest hun bilkul dekhle kabhi dhokha nhi dunga ) mehnge hotel me to nhi lekin stall pe momo khane le chalunga jab bhi tu bole Starbucks to nhi normal coffee bhi le chalunga on my birthday? Just wanna make it special only possible if tu ha bolde Mere intentions kabhi galat nhi the tere liye or na kabhi honge (even though at this age hormones itne release hote hai ki bad thoughts ajate hai but I don't know why but tere liye kabhi nhi aae ) dekhle kabhi chor ke nhi jaunga ha me nhi dikhta hun tere sapno ke raja jaisa but Tera bf requirements jo the (tune bola tha gora chitta hona chaiye (vo to me hun) vo me skin care chalu kr dunga or tusse agar tu bole to and tere se bhi jada gora hojaunga hahahaha jal Mt jada ) at last I wanna ask you..........  </div>
+        
+        <div class="slider-container">
+            <div id="track" class="slider-track"></div>
+            <input type="range" id="promiseSlider" min="0" max="100" value="0" oninput="updateSlider(this.value)">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none font-bold">Slide a little to seal the Promise >>></div>
+        </div>
+    </div>
+</section>
+
 <section id="p8" class="page">
-  <h2 class="text-white text-2xl font-black mb-10">will you be my pasandida Mahila?</h2>
+    <h2 class="text-white text-2xl font-black mb-10 animate__animated animate__flash animate__infinite">will you be my pasandida Mahila?</h2>
+    
+    <div class="person-container animate__animated animate__heartBeat animate__infinite">
+        <video id="finalVideo" width="100%" height="100%" style="object-fit: cover;" playsinline>
+            <source src="https://files.catbox.moe/lh3t85.mp4" type="video/mp4">
+        </video>
+    </div>
 
-  <div class="person-container">
-    <img src="https://i.ibb.co/fz8w2Snc/Culture-Matrix-Red-Pill-Blue-Pill-1047403844.webp" class="w-full h-full object-cover">
-  </div>
-
-  <div class="w-full max-w-xs space-y-6">
-    <button onclick="accept()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-black btn-blue-glow">
-      press this to be the Pasandida mahila and get a princess treatment forever !
-    </button>
-  </div>
+    <div class="w-full max-w-xs space-y-6 flex flex-col items-center">
+        <button id="blueBtn" onclick="accept()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-black text-sm btn-blue-glow">
+            press this to be the Pasandida mahila and get a princess treatment forever !
+        </button>
+        
+        <button id="redBtn" onmouseover="rejectMove()" onclick="rejectClick()" class="w-full bg-red-600/90 text-white px-4 py-2 font-bold text-xs btn-red-elliptical">
+            its for rejecting and will result in vanishing of satyam from your life because i can't be your friend because it hurts alot!
+        </button>
+    </div>
 </section>
 
 <script>
-function accept() {
-  confetti({ particleCount: 400, spread: 120 });
+const bg = document.getElementById('bgLayer');
+function spawn(emoji = null) {
+    const el = document.createElement('div');
+    el.className = 'floating-item';
+    el.innerText = emoji || ['❤️', '🧸', '💖', '✨', '🌸'][Math.floor(Math.random()*5)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+    bg.appendChild(el);
+    setTimeout(() => el.remove(), 8000);
+}
+setInterval(() => spawn(), 400);
 
-  Swal.fire({
-    html: `
-      <h2 style="color:white;font-size:22px;font-weight:800;margin-bottom:15px;">
-        Thank you for choosing me
-      </h2>
-      <video src="https://files.catbox.moe/lh3t85.mp4" controls autoplay style="width:100%;border-radius:15px;"></video>
-    `,
-    background: '#000',
-    showConfirmButton: false
-  });
+function checkPass() {
+    if(document.getElementById('pass').value === 'RS6367') {
+        Swal.fire({ icon: 'success', title: 'Welcome RS Ji apka swagat hai', background: '#111', color: '#fff', showConfirmButton: false, timer: 1500 });
+        nav(2);
+    } else {
+        Swal.fire({ icon: 'error', title: 'Wrong Password!', background: '#111', color: '#fff' });
+    }
+}
+
+function nav(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('p'+id).classList.add('active', 'animate__animated', 'animate__fadeIn');
+}
+
+function updateSlider(val) {
+    document.getElementById('track').style.width = val + '%';
+    if(val >= 80) { 
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        setTimeout(() => nav(8), 500);
+    }
+}
+
+let redCount = 0;
+const redMsgs = ["itni jaldi soch lia?", "yr try krke dekh?", "itni aasani se kese jayegi me 9-10 saal wait Kia", "tu sach me chahti hai me hamesha ke liye chale jau?", "me friendzone me nhi reh skta sorry", "either block me ya fir me khud hi gayab jojaunga"];
+
+function rejectMove() {
+    if(redCount < 5) {
+        const btn = document.getElementById('redBtn');
+        btn.style.position = 'fixed';
+        btn.style.left = Math.random() * (window.innerWidth - 250) + 'px';
+        btn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+        Swal.fire({ text: redMsgs[redCount], toast: true, position: 'top', background: '#333', color: '#fff', showConfirmButton: false, timer: 1000 });
+        redCount++;
+    }
+}
+
+function rejectClick() {
+    if(redCount >= 5) {
+        document.body.innerHTML = "<div class='flex h-screen w-full items-center justify-center bg-black text-white text-2xl px-10 text-center font-bold animate__animated animate__fadeOut'>💔 you broke someone completely</div>";
+    } else { rejectMove(); }
+}
+
+function accept() {
+    // START VIDEO
+    const video = document.getElementById('finalVideo');
+    if (video) { video.play(); }
+
+    const danceInterval = setInterval(() => spawn('💃🕺'), 200);
+    confetti({ particleCount: 500, spread: 150 });
+
+    // UPDATED POPUP CONTENT
+    Swal.fire({
+        title: '<span class="lyrics-font text-4xl">Thank you!</span>',
+        html: `
+            <div class="text-white space-y-4">
+                <p class="text-xl font-bold animate__animated animate__fadeInUp">
+                    "Thank you for choosing me"
+                </p>
+                <hr class="border-gray-700">
+                <p class="font-black text-blue-400">WhatsApp PE ha bol me wait krra bhot time se!</p>
+            </div>
+        `,
+        background: '#000 url("https://www.transparenttextures.com/patterns/dark-matter.png")',
+        showConfirmButton: true,
+        confirmButtonText: 'Watch Our Moment',
+        confirmButtonColor: '#2563eb'
+    }).then(() => {
+        clearInterval(danceInterval);
+    });
 }
 </script>
-
 </body>
 </html>
-
