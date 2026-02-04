@@ -31,10 +31,10 @@ body { font-family: 'Poppins', sans-serif; background: #000; color: white; touch
     z-index: 10; 
     flex-direction: column; 
     align-items: center; 
-    justify-content: flex-start; /* Better for mobile scrolling */
+    justify-content: flex-start; 
     padding: 20px; 
     text-align: center;
-    overflow-y: auto; /* Enable scrolling for long text */
+    overflow-y: auto; 
 }
 .active { display: flex; }
 
@@ -71,15 +71,25 @@ body { font-family: 'Poppins', sans-serif; background: #000; color: white; touch
 }
 
 .person-container {
-    width: 200px; height: 200px; border-radius: 50%;
-    border: 3px solid #fff; overflow: hidden; margin-bottom: 15px;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    width: 220px; height: 220px; border-radius: 50%;
+    border: 4px solid #fff; overflow: hidden; margin-bottom: 15px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
     flex-shrink: 0;
+    position: relative;
+}
+
+/* Fix for Video Filling Circle */
+#finalVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the video fills the circle without gaps */
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .lyrics-font { font-family: 'Great Vibes', cursive; color: #ff69b4; }
 
-/* Mobile adjustments */
 @media (max-width: 380px) {
     .glass { padding: 1.5rem !important; }
     h1 { font-size: 1.25rem !important; }
@@ -148,7 +158,7 @@ body { font-family: 'Poppins', sans-serif; background: #000; color: white; touch
     <h2 class="text-white text-xl font-black mb-6 animate__animated animate__flash animate__infinite">will you be my pasandida Mahila?</h2>
     
     <div class="person-container animate__animated animate__heartBeat animate__infinite">
-        <video id="finalVideo" width="100%" height="100%" style="object-fit: cover;" playsinline>
+        <video id="finalVideo" playsinline>
             <source src="https://files.catbox.moe/lh3t85.mp4" type="video/mp4">
         </video>
     </div>
@@ -190,7 +200,7 @@ function nav(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const nextPage = document.getElementById('p'+id);
     nextPage.classList.add('active', 'animate__animated', 'animate__fadeIn');
-    nextPage.scrollTop = 0; // Reset scroll to top
+    nextPage.scrollTop = 0;
 }
 
 function updateSlider(val) {
@@ -210,7 +220,8 @@ function rejectMove() {
         btn.style.position = 'fixed';
         btn.style.left = Math.random() * (window.innerWidth - 180) + 'px';
         btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-        Swal.fire({ text: redMsgs[redCount], toast: true, position: 'top', background: '#333', color: '#fff', showConfirmButton: false, timer: 1000 });
+        // Timing increased to 3000ms (3 seconds)
+        Swal.fire({ text: redMsgs[redCount], toast: true, position: 'top', background: '#333', color: '#fff', showConfirmButton: false, timer: 3000 });
         redCount++;
     }
 }
@@ -222,6 +233,10 @@ function rejectClick() {
 }
 
 function accept() {
+    // 1. Remove Red Button immediately
+    const redBtn = document.getElementById('redBtn');
+    if(redBtn) redBtn.remove();
+
     const danceInterval = setInterval(() => spawn('💃🕺'), 200);
     confetti({ particleCount: 500, spread: 150 });
 
@@ -239,12 +254,15 @@ function accept() {
         confirmButtonText: 'Watch Our Moment',
         confirmButtonColor: '#2563eb'
     }).then(() => {
-        // Only play video after popup is clicked
         const video = document.getElementById('finalVideo');
-        if (video) { video.play(); }
+        if (video) { 
+            video.style.display = "block";
+            video.play(); 
+        }
         clearInterval(danceInterval);
     });
 }
 </script>
 </body>
 </html>
+
